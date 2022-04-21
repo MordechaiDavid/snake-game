@@ -7,7 +7,6 @@ import java.util.Random;
 import static snack_game.GameRectangle.GENERAL_SIZE;
 
 public class GameScene extends JPanel {
-    private int x;
     private int width;
     private int height;
     private Snake playerSnack;
