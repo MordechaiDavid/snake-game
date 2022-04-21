@@ -34,7 +34,6 @@ public class GameScene extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.paintScore(g);
         g.setColor(Color.black);
         this.playerSnack.paint(g);
         this.playerFood.paint(g);
@@ -58,7 +57,6 @@ public class GameScene extends JPanel {
             g.setFont(font);
             g.drawString("Game Over", width/2-160, height/2);
         }
-
     }
 
     public void gameLoop(){
@@ -83,9 +81,8 @@ public class GameScene extends JPanel {
         }).start();
     }
 
-    public void paintScore(Graphics g){
-        g.drawChars(new char[]{'H', 'I'} , 0, 2, 100, 20);
-    }
+
+
 }
 
 
