@@ -4,18 +4,20 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import static snack_game.GameRectangle.GENERAL_SIZE;
+
 public class Snake {
-    private GameRectangle[] SnakeArr;
+    private GameRectangle[] snakeArr;
     private int snakeUnits;
     private Color headColor;
     private Color bodyColor;
     private int direction= KeyEvent.VK_RIGHT;
 
     public Snake(int screenWidth, int screenHeight, int snakeUnits, Color headColor, Color bodyColor) {
-        SnakeArr = new GameRectangle[(screenHeight*screenHeight)/ GameRectangle.GENERAL_SIZE];
+        snakeArr = new GameRectangle[(screenHeight*screenHeight)/ GENERAL_SIZE];
         this.snakeUnits= snakeUnits;
         for (int i = 0; i < this.snakeUnits ; i++) {
-            this.SnakeArr[i] = new GameRectangle(0, 0);
+            this.snakeArr[i] = new GameRectangle(0, 0);
         }
         this.headColor = headColor;
         this.bodyColor = bodyColor;
@@ -25,60 +27,78 @@ public class Snake {
         for (int i = 0; i < snakeUnits; i++) {
             if(i==0){
                 g.setColor(headColor);
-                SnakeArr[i].paint(g);
+                snakeArr[i].paint(g);
             }
             else {
                 g.setColor(bodyColor);
-                SnakeArr[i].paint(g);
+                snakeArr[i].paint(g);
             }
         }
     }
 
     public void move(){
         for (int i = snakeUnits-1; i >0; i--) {
-            SnakeArr[i].x = SnakeArr[i-1].x;
-            SnakeArr[i].y = SnakeArr[i-1].y;
+            snakeArr[i].x = snakeArr[i-1].x;
+            snakeArr[i].y = snakeArr[i-1].y;
         }
         switch (direction){
             case KeyEvent.VK_RIGHT:
-                this.SnakeArr[0].x+= GameRectangle.GENERAL_SIZE;
+                this.snakeArr[0].x+= GENERAL_SIZE;
                 break;
 
             case KeyEvent.VK_LEFT:
-                this.SnakeArr[0].x-= GameRectangle.GENERAL_SIZE;
+                this.snakeArr[0].x-= GENERAL_SIZE;
                 break;
 
             case KeyEvent.VK_UP:
-                this.SnakeArr[0].y-= GameRectangle.GENERAL_SIZE;
+                this.snakeArr[0].y-= GENERAL_SIZE;
                 break;
 
             case KeyEvent.VK_DOWN:
-                this.SnakeArr[0].y+= GameRectangle.GENERAL_SIZE;
+                this.snakeArr[0].y+= GENERAL_SIZE;
                 break;
         }
     }
 
     public boolean CollisionWithFood(GameRectangle other){
         for (int i = 0; i < snakeUnits; i++) {
-            if(SnakeArr[i].isCollision(other))
+            if(snakeArr[i].isCollision(other))
                 return true;
         }
         return false;
     }
 
+    public void reachBorder(int screenWidth, int screenHeight){
+        if (snakeArr[0].x > screenWidth )
+            snakeArr[0].x = 0;
+
+        if (snakeArr[0].x < 0 )
+            snakeArr[0].x= screenWidth;
+
+        if (snakeArr[0].y < 0 )
+            snakeArr[0].y= screenHeight;
+
+        if (snakeArr[0].y > screenHeight )
+            snakeArr[0].y= 0;
+    }
+
 
     public void checkFood(SnakeFood playerFood, int screenWidth, int screenHeight){
         Random random = new Random();
-        if (this.SnakeArr[0].isCollision(playerFood)) {
-            playerFood.x = random.nextInt((int)(screenWidth/ GameRectangle.GENERAL_SIZE))* GameRectangle.GENERAL_SIZE;
-            playerFood.y = random.nextInt((int)(screenHeight/ GameRectangle.GENERAL_SIZE))* GameRectangle.GENERAL_SIZE;
-            this.SnakeArr[snakeUnits]= new GameRectangle(0,0);
+        if (this.snakeArr[0].isCollision(playerFood)) {
+            playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE);
+            playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE);
+            this.snakeArr[snakeUnits]= new GameRectangle(0,0);
             this.snakeUnits++;
         }
     }
 
     public void gameOver(){
 
+    }
+
+    public int getDirection() {
+        return direction;
     }
 
     public void setDirection(int direction) {
