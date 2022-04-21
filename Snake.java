@@ -82,6 +82,14 @@ public class Snake {
             snakeArr[0].y= 0;
     }
 
+    public boolean isTouchItself(){
+        for (int i = 1; i < snakeUnits; i++) {
+            if (snakeArr[0].isCollision(snakeArr[i]))
+                return true;
+        }
+        return false;
+    }
+
 
     public void checkFood(SnakeFood playerFood, int screenWidth, int screenHeight){
         Random random = new Random();

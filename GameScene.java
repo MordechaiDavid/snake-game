@@ -11,6 +11,7 @@ public class GameScene extends JPanel {
     private int height;
     private Snake playerSnack;
     private SnakeFood playerFood;
+    private boolean isRun=true;
 
 
 
@@ -38,6 +39,7 @@ public class GameScene extends JPanel {
         this.playerSnack.paint(g);
         this.playerFood.paint(g);
         this.drawGreed(g);
+        this.gameOver(g);
 
     }
 
@@ -48,7 +50,14 @@ public class GameScene extends JPanel {
         }
     }
 
-    public void gameOver(){
+    public void gameOver(Graphics g){
+        if(playerSnack.isTouchItself()){
+            isRun=false;
+            g.setColor(Color.RED);
+            Font font= new Font("Kristen ITC", Font.BOLD, 59);
+            g.setFont(font);
+            g.drawString("Game Over", width/2-160, height/2);
+        }
 
     }
 
@@ -60,9 +69,11 @@ public class GameScene extends JPanel {
             this.requestFocus();
             while (true){
                 try {
-                    this.playerSnack.checkFood(this.playerFood, this.width, this.height);
-                    this.playerSnack.move();
-                    this.playerSnack.reachBorder(width, height);
+                    if (isRun) {
+                        this.playerSnack.checkFood(this.playerFood, this.width, this.height);
+                        this.playerSnack.move();
+                        this.playerSnack.reachBorder(width, height);
+                    }
                     Thread.sleep(70);
                     repaint();
                 } catch (InterruptedException e) {
