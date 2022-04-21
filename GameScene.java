@@ -4,11 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
+import static snack_game.GameRectangle.GENERAL_SIZE;
+
 public class GameScene extends JPanel {
     private int width;
     private int height;
     private Snake playerSnack;
     private SnakeFood playerFood;
+
+
 
     public GameScene(int x, int y, int width, int height){
         this.width = width;
@@ -33,7 +37,15 @@ public class GameScene extends JPanel {
         g.setColor(Color.black);
         this.playerSnack.paint(g);
         this.playerFood.paint(g);
+        this.drawGreed(g);
 
+    }
+
+    public void drawGreed(Graphics g){
+        for (int i = 0; i < height/GENERAL_SIZE; i++) {
+            g.drawLine(i*GENERAL_SIZE, 0, i*GENERAL_SIZE, height);
+            g.drawLine(0, i*GENERAL_SIZE, width, i*GENERAL_SIZE);
+        }
     }
 
     public void gameLoop(){
@@ -46,6 +58,7 @@ public class GameScene extends JPanel {
                 try {
                     this.playerSnack.checkFood(this.playerFood, this.width, this.height);
                     this.playerSnack.move();
+                    this.playerSnack.reachBorder(width, height);
                     Thread.sleep(70);
                     repaint();
                 } catch (InterruptedException e) {
