@@ -93,9 +93,6 @@ public class Snake {
         }
     }
 
-    public void gameOver(){
-
-    }
 
     public int getDirection() {
         return direction;

@@ -8,7 +8,6 @@ import static snack_game.GameRectangle.GENERAL_SIZE;
 
 public class GameScene extends JPanel {
     private int width;
-    int x;
     private int height;
     private Snake playerSnack;
     private SnakeFood playerFood;
@@ -47,6 +46,10 @@ public class GameScene extends JPanel {
             g.drawLine(i*GENERAL_SIZE, 0, i*GENERAL_SIZE, height);
             g.drawLine(0, i*GENERAL_SIZE, width, i*GENERAL_SIZE);
         }
+    }
+
+    public void gameOver(){
+
     }
 
     public void gameLoop(){
