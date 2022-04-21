@@ -56,6 +56,7 @@ public class GameScene extends JPanel {
             Font font= new Font("Kristen ITC", Font.BOLD, 59);
             g.setFont(font);
             g.drawString("Game Over", width/2-160, height/2);
+
         }
     }
 
