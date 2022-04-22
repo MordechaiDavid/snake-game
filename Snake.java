@@ -94,8 +94,8 @@ public class Snake {
     public void checkFood(SnakeFood playerFood, int screenWidth, int screenHeight){
         Random random = new Random();
         if (this.snakeArr[0].isCollision(playerFood)) {
-            playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE);
-            playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE);
+            playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE*2);
+            playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE*3);
             this.snakeArr[snakeUnits]= new GameRectangle(0,0);
             this.snakeUnits++;
         }

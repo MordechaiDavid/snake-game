@@ -24,7 +24,7 @@ public class GameScene extends JPanel {
         Random random = new Random();
         SnakeFood test = null;
         do {
-            test = new SnakeFood(random.nextInt(width), random.nextInt(height), Color.ORANGE);
+            test = new SnakeFood(random.nextInt(width-GENERAL_SIZE*2), random.nextInt(height-GENERAL_SIZE*3), Color.ORANGE);
         }while (playerSnack.CollisionWithFood(test));
         playerFood = test;
         this.gameLoop();
@@ -34,7 +34,6 @@ public class GameScene extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.black);
         this.playerSnack.paint(g);
         this.playerFood.paint(g);
         this.drawGreed(g);
@@ -73,7 +72,7 @@ public class GameScene extends JPanel {
                         this.playerSnack.move();
                         this.playerSnack.reachBorder(width, height);
                     }
-                    Thread.sleep(70);
+                    Thread.sleep(90);
                     repaint();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
