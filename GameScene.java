@@ -14,7 +14,6 @@ public class GameScene extends JPanel {
     private boolean isRun=true;
 
 
-
     public GameScene(int x, int y, int width, int height){
         this.width = width;
         this.height = height;
@@ -36,17 +35,10 @@ public class GameScene extends JPanel {
         super.paintComponent(g);
         this.playerSnack.paint(g);
         this.playerFood.paint(g);
-        this.drawGreed(g);
         this.gameOver(g);
 
     }
 
-    public void drawGreed(Graphics g){
-        for (int i = 0; i < height/GENERAL_SIZE; i++) {
-            g.drawLine(i*GENERAL_SIZE, 0, i*GENERAL_SIZE, height);
-            g.drawLine(0, i*GENERAL_SIZE, width, i*GENERAL_SIZE);
-        }
-    }
 
     public void gameOver(Graphics g){
         if(playerSnack.isTouchItself()){
