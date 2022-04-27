@@ -60,7 +60,7 @@ public class Snake {
         }
     }
 
-    public boolean CollisionWithFood(GameRectangle other){
+    public boolean collisionWithFood(GameRectangle other){
         for (int i = 0; i < snakeUnits; i++) {
             if(snakeArr[i].isCollision(other))
                 return true;
@@ -94,8 +94,8 @@ public class Snake {
     public void checkFood(SnakeFood playerFood, int screenWidth, int screenHeight){
         Random random = new Random();
         if (this.snakeArr[0].isCollision(playerFood)) {
-            playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE*2);
-            playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE*3);
+            playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE);
+            playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE);
             this.snakeArr[snakeUnits]= new GameRectangle(0,0);
             this.snakeUnits++;
         }

@@ -23,8 +23,8 @@ public class GameScene extends JPanel {
         Random random = new Random();
         SnakeFood test = null;
         do {
-            test = new SnakeFood(random.nextInt(width-GENERAL_SIZE*2), random.nextInt(height-GENERAL_SIZE*3), Color.ORANGE);
-        }while (playerSnack.CollisionWithFood(test));
+            test = new SnakeFood(random.nextInt(width-GENERAL_SIZE), random.nextInt(height-GENERAL_SIZE), Color.ORANGE);
+        }while (playerSnack.collisionWithFood(test));
         playerFood = test;
         this.gameLoop();
     }
