@@ -113,4 +113,8 @@ public class Snake {
     public GameRectangle[] getSnakeArr() {
         return snakeArr;
     }
+
+    public int getSnakeUnits() {
+        return snakeUnits;
+    }
 }

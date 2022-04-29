@@ -27,6 +27,16 @@ public class GameRectangle {
         return collision;
     }
 
+    public static boolean isInSamePosition(GameRectangle[] arr, int length, int x, int y){
+        boolean ans=true;
+        for (int i = 0; i < length; i++) {
+            if (arr[i].x!=x  && arr[i].y!=y){
+                ans=false;
+            }
+        }
+        return ans;
+    }
+
     public int getX() {
         return x;
     }
