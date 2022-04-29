@@ -12,6 +12,7 @@ public class Snake {
     private Color headColor;
     private Color bodyColor;
     private int direction= KeyEvent.VK_RIGHT;
+    private int score;
 
     public Snake(int screenWidth, int screenHeight, int snakeUnits, Color headColor, Color bodyColor) {
         snakeArr = new GameRectangle[(screenHeight*screenHeight)/ GENERAL_SIZE];
@@ -21,6 +22,7 @@ public class Snake {
         }
         this.headColor = headColor;
         this.bodyColor = bodyColor;
+        this.score=0;
     }
 
     public void paint(Graphics g){
@@ -94,10 +96,14 @@ public class Snake {
     public void checkFood(SnakeFood playerFood, int screenWidth, int screenHeight){
         Random random = new Random();
         if (this.snakeArr[0].isCollision(playerFood)) {
+            // generate another food.
             playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE);
             playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE);
+            // increase the snack body.
             this.snakeArr[snakeUnits]= new GameRectangle(0,0);
             this.snakeUnits++;
+            // increase the score
+            this.score++;
         }
     }
 
@@ -116,5 +122,9 @@ public class Snake {
 
     public int getSnakeUnits() {
         return snakeUnits;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

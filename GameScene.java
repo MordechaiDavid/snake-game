@@ -18,7 +18,7 @@ public class GameScene extends JPanel {
         this.width = width;
         this.height = height;
         this.setBounds(x, y, width, height);
-        this.setBackground(Color.black);
+        this.setBackground(Color.DARK_GRAY);
         playerSnack = new Snake(width, height, 6, Color.RED, Color.GREEN);
         Random random = new Random();
         SnakeFood test = null;
@@ -35,8 +35,16 @@ public class GameScene extends JPanel {
         super.paintComponent(g);
         this.playerSnack.paint(g);
         this.playerFood.paint(g);
+        drawScore(g);
         this.gameOver(g);
 
+    }
+
+    public void drawScore(Graphics g){
+        g.setColor(Color.red);
+        Font font = new Font("Kristen ITC", Font.ITALIC, 30);
+        g.setFont(font);
+        g.drawString("Score:"+this.playerSnack.getScore(), width /2-40, 30);
     }
 
 
@@ -46,7 +54,7 @@ public class GameScene extends JPanel {
                 if(playerSnack.isTouchItself()) {
                 isRun = false;
                 g.setColor(Color.RED);
-                Font font = new Font("Kristen ITC", Font.BOLD, 59);
+                Font font = new Font("Kristen ITC", Font.BOLD, 70);
                 g.setFont(font);
                 g.drawString("Game Over", width / 2 - 160, height / 2);
 
