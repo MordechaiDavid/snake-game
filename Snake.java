@@ -109,4 +109,8 @@ public class Snake {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
+    public GameRectangle[] getSnakeArr() {
+        return snakeArr;
+    }
 }

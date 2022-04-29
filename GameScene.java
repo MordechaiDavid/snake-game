@@ -41,15 +41,17 @@ public class GameScene extends JPanel {
 
 
     public void gameOver(Graphics g){
-        if(playerSnack.isTouchItself()){
-            isRun=false;
+        if (this.playerSnack.getSnakeArr()[0].x!=0){
+        if(playerSnack.isTouchItself()) {
+            isRun = false;
             g.setColor(Color.RED);
-            Font font= new Font("Kristen ITC", Font.BOLD, 59);
+            Font font = new Font("Kristen ITC", Font.BOLD, 59);
             g.setFont(font);
-            g.drawString("Game Over", width/2-160, height/2);
+            g.drawString("Game Over", width / 2 - 160, height / 2);
 
+          }
         }
-    }
+     }
 
     public void gameLoop(){
         new Thread( ()-> {
