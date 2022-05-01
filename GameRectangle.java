@@ -5,7 +5,7 @@ public class GameRectangle {
 
     protected int x;
     protected int y;
-    public final static int GENERAL_SIZE=23;
+    public final static int GENERAL_COMPONENT_SIZE =23;
 
 
     public GameRectangle(int x, int y) {
@@ -14,17 +14,27 @@ public class GameRectangle {
     }
 
     public void paint(Graphics graphics){
-        graphics.fillRect(this.x, this.y, GENERAL_SIZE, GENERAL_SIZE);
+        graphics.fillRect(this.x, this.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
     }
 
     public boolean isCollision( GameRectangle other){
         boolean collision = false;
-        Rectangle thisRactangle = new Rectangle(this.x, this.y, GENERAL_SIZE, GENERAL_SIZE);
-        Rectangle otherRactangle = new Rectangle(other.x, other.y, GENERAL_SIZE, GENERAL_SIZE);
+        Rectangle thisRactangle = new Rectangle(this.x, this.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
+        Rectangle otherRactangle = new Rectangle(other.x, other.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
         if( thisRactangle.intersects(otherRactangle))
             collision=true;
 
         return collision;
+    }
+
+    public static boolean isInSamePosition(GameRectangle[] arr, int length, int x, int y){
+        boolean ans=true;
+        for (int i = 0; i < length; i++) {
+            if (arr[i].x!=x  && arr[i].y!=y){
+                ans=false;
+            }
+        }
+        return ans;
     }
 
     public int getX() {
