@@ -4,18 +4,18 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-import static snack_game.GameRectangle.GENERAL_SIZE;
+import static snack_game.GameRectangle.GENERAL_COMPONENT_SIZE;
 
 public class Snake {
-    private GameRectangle[] snakeArr;
+    private final GameRectangle[] snakeArr;
     private int snakeUnits;
-    private Color headColor;
-    private Color bodyColor;
+    private final Color headColor;
+    private final Color bodyColor;
     private int direction= KeyEvent.VK_RIGHT;
     private int score;
 
     public Snake(int screenWidth, int screenHeight, int snakeUnits, Color headColor, Color bodyColor) {
-        snakeArr = new GameRectangle[(screenHeight*screenHeight)/ GENERAL_SIZE];
+        snakeArr = new GameRectangle[(screenHeight*screenHeight)/ GENERAL_COMPONENT_SIZE];
         this.snakeUnits= snakeUnits;
         for (int i = 0; i < this.snakeUnits ; i++) {
             this.snakeArr[i] = new GameRectangle(0, 0);
@@ -45,19 +45,19 @@ public class Snake {
         }
         switch (direction){
             case KeyEvent.VK_RIGHT:
-                this.snakeArr[0].x+= GENERAL_SIZE;
+                this.snakeArr[0].x+= GENERAL_COMPONENT_SIZE;
                 break;
 
             case KeyEvent.VK_LEFT:
-                this.snakeArr[0].x-= GENERAL_SIZE;
+                this.snakeArr[0].x-= GENERAL_COMPONENT_SIZE;
                 break;
 
             case KeyEvent.VK_UP:
-                this.snakeArr[0].y-= GENERAL_SIZE;
+                this.snakeArr[0].y-= GENERAL_COMPONENT_SIZE;
                 break;
 
             case KeyEvent.VK_DOWN:
-                this.snakeArr[0].y+= GENERAL_SIZE;
+                this.snakeArr[0].y+= GENERAL_COMPONENT_SIZE;
                 break;
         }
     }
@@ -93,13 +93,18 @@ public class Snake {
     }
 
 
-    public void checkFood(SnakeFood playerFood, int screenWidth, int screenHeight){
-        Random random = new Random();
+    public void checkFood(SnakeFood playerFood, Snake snake, int screenWidth, int screenHeight){
         if (this.snakeArr[0].isCollision(playerFood)) {
-            // generate another food.
-            playerFood.x = random.nextInt(screenWidth- GENERAL_SIZE);
-            playerFood.y = random.nextInt(screenHeight- GENERAL_SIZE);
-            // increase the snack body.
+            // generate new food.
+            Random random = new Random();
+            // ensure that new food doesn't touch body snake
+            SnakeFood test = null;
+            do {
+                test = new SnakeFood(random.nextInt(screenWidth- GENERAL_COMPONENT_SIZE), random.nextInt(screenHeight- GENERAL_COMPONENT_SIZE), Color.ORANGE);
+            }while (snake.collisionWithFood(test));
+            playerFood.x= test.x;
+            playerFood.y= test.y;
+            // increase the body snack.
             this.snakeArr[snakeUnits]= new GameRectangle(0,0);
             this.snakeUnits++;
             // increase the score

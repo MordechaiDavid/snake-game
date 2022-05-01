@@ -4,28 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-import static snack_game.GameRectangle.GENERAL_SIZE;
+import static snack_game.GameRectangle.GENERAL_COMPONENT_SIZE;
 
 public class GameScene extends JPanel {
-    private int width;
-    private int height;
-    private Snake playerSnack;
-    private SnakeFood playerFood;
+    private final int screenWidth;
+    private final int screenHeight;
+    private final Snake snackPlayer;
+    private SnakeFood foodPlayer;
     private boolean isRun=true;
 
 
-    public GameScene(int x, int y, int width, int height){
-        this.width = width;
-        this.height = height;
-        this.setBounds(x, y, width, height);
+    public GameScene(int x, int y, int screenWidth, int screenHeight){
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.setBounds(x, y, screenWidth, screenHeight);
         this.setBackground(Color.DARK_GRAY);
-        playerSnack = new Snake(width, height, 6, Color.RED, Color.GREEN);
+        snackPlayer = new Snake(this.screenWidth, this.screenHeight , 6, Color.RED, Color.GREEN);
         Random random = new Random();
         SnakeFood test = null;
         do {
-            test = new SnakeFood(random.nextInt(width-GENERAL_SIZE), random.nextInt(height-GENERAL_SIZE), Color.ORANGE);
-        }while (playerSnack.collisionWithFood(test));
-        playerFood = test;
+            test = new SnakeFood(random.nextInt(screenWidth- GENERAL_COMPONENT_SIZE), random.nextInt(screenHeight- GENERAL_COMPONENT_SIZE), Color.ORANGE);
+        }while (snackPlayer.collisionWithFood(test));
+        foodPlayer = test;
         this.gameLoop();
     }
 
@@ -33,8 +33,8 @@ public class GameScene extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.playerSnack.paint(g);
-        this.playerFood.paint(g);
+        this.snackPlayer.paint(g);
+        this.foodPlayer.paint(g);
         drawScore(g);
         this.gameOver(g);
 
@@ -44,19 +44,30 @@ public class GameScene extends JPanel {
         g.setColor(Color.red);
         Font font = new Font("Kristen ITC", Font.ITALIC, 30);
         g.setFont(font);
-        g.drawString("Score:"+this.playerSnack.getScore(), width /2-40, 30);
+        FontMetrics fontMetrics = getFontMetrics(g.getFont());
+        int scoreSize = fontMetrics.stringWidth("Score");
+        g.drawString("Score:"+this.snackPlayer.getScore(), (this.screenWidth - scoreSize)/2, 30);
     }
 
 
     public void gameOver(Graphics g){
-        // Check if the snack position is not on the start point of the game.
-        if (!(GameRectangle.isInSamePosition(this.playerSnack.getSnakeArr(),this.playerSnack.getSnakeUnits(), 0, 0))){
-                if(playerSnack.isTouchItself()) {
+        // Check if the snack position is not on the start point of the game that all body pieces are in default 0.
+        if (!(GameRectangle.isInSamePosition(this.snackPlayer.getSnakeArr(),this.snackPlayer.getSnakeUnits(), 0, 0))){
+                if(snackPlayer.isTouchItself()) {
                 isRun = false;
+                // paint game over message
                 g.setColor(Color.RED);
-                Font font = new Font("Kristen ITC", Font.BOLD, 70);
+                Font font = new Font("Kristen ITC", Font.BOLD, 65);
                 g.setFont(font);
-                g.drawString("Game Over", width / 2 - 160, height / 2);
+                FontMetrics fontMetrics = getFontMetrics(g.getFont());
+                int gameOverSize = fontMetrics.stringWidth("Game Over");
+                g.drawString("Game Over", (screenWidth - gameOverSize)/2, screenHeight / 2);
+                // paint final score
+                g.setColor(Color.orange);
+                g.setFont(new Font("kristen ITC", Font.ITALIC, 30));
+                fontMetrics = getFontMetrics(g.getFont());
+                int finalScoreSize = fontMetrics.stringWidth("Your score: "+ this.snackPlayer.getScore());
+                g.drawString("Your Score: "+this.snackPlayer.getScore(),(this.screenWidth - finalScoreSize)/2 , this.screenHeight /2 +40);
 
           }
         }
@@ -64,16 +75,16 @@ public class GameScene extends JPanel {
 
     public void gameLoop(){
         new Thread( ()-> {
-            SnakeListener playerMovementSnack = new SnakeListener(this.playerSnack);
+            SnakeListener playerMovementSnack = new SnakeListener(this.snackPlayer);
             this.addKeyListener(playerMovementSnack);
             this.setFocusable(true);
             this.requestFocus();
             while (true){
                 try {
                     if (isRun) {
-                        this.playerSnack.checkFood(this.playerFood, this.width, this.height);
-                        this.playerSnack.move();
-                        this.playerSnack.reachBorder(width, height);
+                        this.snackPlayer.checkFood(this.foodPlayer, this.snackPlayer, this.screenWidth, this.screenHeight);
+                        this.snackPlayer.move();
+                        this.snackPlayer.reachBorder(screenWidth, screenHeight);
                     }
                     Thread.sleep(90);
                     repaint();
