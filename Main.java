@@ -16,11 +16,9 @@ public class Main extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
-
-
     }
 
     public static void main(String[] args) {
-        Main snack = new Main();
+        Main snake = new Main();
     }
 }

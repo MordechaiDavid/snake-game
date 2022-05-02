@@ -19,9 +19,9 @@ public class GameRectangle {
 
     public boolean isCollision( GameRectangle other){
         boolean collision = false;
-        Rectangle thisRactangle = new Rectangle(this.x, this.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
-        Rectangle otherRactangle = new Rectangle(other.x, other.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
-        if( thisRactangle.intersects(otherRactangle))
+        Rectangle thisRectangle = new Rectangle(this.x, this.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
+        Rectangle otherRectangle = new Rectangle(other.x, other.y, GENERAL_COMPONENT_SIZE, GENERAL_COMPONENT_SIZE);
+        if( thisRectangle.intersects(otherRectangle))
             collision=true;
 
         return collision;
