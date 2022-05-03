@@ -3,8 +3,8 @@ package snack_game;
 import javax.swing.*;
 
 public class Main extends JFrame {
-    public final static int WINDOW_WIDTH=500;
-    public final static int WINDOW_HEIGHT=500;
+    public final static int WINDOW_WIDTH=550;
+    public final static int WINDOW_HEIGHT=550;
 
     public Main(){
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
