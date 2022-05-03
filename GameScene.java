@@ -25,7 +25,7 @@ public class GameScene extends JPanel {
         do {
             test = new SnakeFood(random.nextInt(screenWidth- GENERAL_COMPONENT_SIZE), random.nextInt(screenHeight- GENERAL_COMPONENT_SIZE), Color.ORANGE);
         }while (snackPlayer.collisionWithFood(test));
-        foodPlayer = test;
+        this.foodPlayer = test;
         this.gameLoop();
     }
 
@@ -35,7 +35,7 @@ public class GameScene extends JPanel {
         super.paintComponent(g);
         this.snackPlayer.paint(g);
         this.foodPlayer.paint(g);
-        drawScore(g);
+        this.drawScore(g);
         this.gameOver(g);
 
     }
@@ -51,10 +51,10 @@ public class GameScene extends JPanel {
 
 
     public void gameOver(Graphics g){
-        // Check if the snack position is not on the start point of the game that all body pieces are in default 0.
+        // Ensure that snack position is not on the start point of the game that all (x,y) snake pieces coordinates are 0 by default and touch each other.
         if (!(GameRectangle.isInSamePosition(this.snackPlayer.getSnakeArr(),this.snackPlayer.getSnakeUnits(), 0, 0))){
                 if(snackPlayer.isTouchItself()) {
-                isRun = false;
+                this.isRun = false;
                 // paint game over message
                 g.setColor(Color.RED);
                 Font font = new Font("Kristen ITC", Font.BOLD, 65);
